@@ -5,6 +5,12 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 import Create from "@material-ui/icons/Create";
+import Modal from "@material-ui/core/Modal";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
@@ -87,15 +93,164 @@ class Profile extends Component {
       "GET",
       this.state.baseUrl + "users/self/?access_token=" + this.state.access_token
     );
-    // xhrUserProfile.setRequestHeader("Cache-Control", "no-cache");
     xhrUserProfile.send(dataUserProfile);
+
+    // Get user posts
+    let dataUserPosts = null;
+    let xhrUserPosts = new XMLHttpRequest();
+    xhrUserPosts.addEventListener("readystatechange", function() {
+      if (this.readyState === 4) {
+        const data = JSON.parse(this.responseText).data;
+        that.setState({ userPosts: [...data] });
+      }
+    });
+    xhrUserPosts.open(
+      "GET",
+      this.state.baseUrl +
+        "users/self/media/recent?access_token=" +
+        this.state.access_token
+    );
+    xhrUserPosts.send(dataUserPosts);
   }
+
+  /**
+   * @memberof Profile
+   * @description To close edit full name modal and set values
+   */
+  handleEditNameClose = () => {
+    this.setState({
+      editNameOpen: false,
+      fullnameRequired: "dispNone"
+    });
+  };
+
+  /**
+   * @memberof Profile
+   * @description To open edit full name modal and set values
+   */
+  handleEditNameOpen = () => {
+    this.setState({
+      editFullName: this.state.full_name,
+      editNameOpen: true
+    });
+  };
+
+  /**
+   * @memberof Profile
+   * @description Update user full name state  value and required field validation
+   */
+  updateNameClickHandler = () => {
+    this.state.editFullName === ""
+      ? this.setState({ fullnameRequired: "dispBlock" })
+      : this.setState({ fullnameRequired: "dispNone" });
+    if (this.state.editFullName === "") {
+      return;
+    } else {
+      this.setState({ full_name: this.state.editFullName });
+    }
+  };
+
+  /**
+   * @memberof Profile
+   * @description Set state full name on every changes in values
+   */
+  inputFullNameChangeHandler = e => {
+    this.setState({ editFullName: e.target.value });
+  };
+
+  /**
+   * @memberof Profile
+   * @description On click of each post image  open modal with details
+   * @param _id - selected item id(key)
+   * @param _index - selected item array index
+   */
+  handlePostClickHandler = (_id, _index) => {
+    let _userPostItems = this.state.userPosts;
+    this.setState({
+      selectedPost: _userPostItems[_index],
+      selectedIndex: _index,
+      postItemOpen: true,
+      addNewComment: ""
+    });
+  };
+
+  /**
+   * @memberof Profile
+   * @description Handle post details modal close event
+   */
+  handlePostItemClose = () => {
+    this.setState({
+      selectedPost: null,
+      postItemOpen: false,
+      selectedIndex: -1
+    });
+  };
+
+  /**
+   * @memberof Profile
+   * @description like and unlike functionality
+   */
+  likesClickHandler = () => {
+    let _selectedPostItem = this.state.selectedPost;
+    let _userPosts = this.state.userPosts;
+    const _selectedIndex = this.state.selectedIndex;
+    if (_selectedPostItem.user_has_liked) {
+      _selectedPostItem.user_has_liked = false;
+      _selectedPostItem.likes.count = _selectedPostItem.likes.count - 1;
+    } else {
+      _selectedPostItem.user_has_liked = true;
+      _selectedPostItem.likes.count = _selectedPostItem.likes.count + 1;
+    }
+
+    _userPosts[_selectedIndex] = _selectedPostItem;
+
+    this.setState({
+      selectedPost: _selectedPostItem,
+      userPosts: _userPosts
+    });
+  };
+
+  /**
+   * @memberof Profile
+   * @description Set state addNewComment on value change
+   */
+  inputAddCommentChangeHandler = e => {
+    this.setState({ addNewComment: e.target.value });
+  };
+
+  /**
+   * @memberof Profile
+   * @description Adding new comments to post
+   */
+  addCommentClickHandler = () => {
+    if (this.state.addNewComment === "") {
+      return;
+    } else {
+      let _selectedPostItem = this.state.selectedPost;
+      _selectedPostItem.comments["data"] =
+        _selectedPostItem.comments["data"] || [];
+      _selectedPostItem.comments["data"].push({
+        id: _selectedPostItem.comments["data"].length + 1,
+        comment_by: this.state.username,
+        comment_value: this.state.addNewComment
+      });
+
+      let _userPosts = this.state.userPosts;
+      const _selectedIndex = this.state.selectedIndex;
+      _userPosts[_selectedIndex] = _selectedPostItem;
+
+      this.setState({
+        selectedPost: _selectedPostItem,
+        userPosts: _userPosts,
+        addNewComment: ""
+      });
+    }
+  };
 
   render() {
     const { classes } = this.props;
     return (
       <div>
-        {/* <Header profileIcon={true} profilePicture={this.state.profile_picture} profileUserName={this.state.username} /> */}
         <Container fixed>
           <Grid container spacing={3} justify="center" alignItems="center">
             <Grid item>
@@ -149,6 +304,44 @@ class Profile extends Component {
                   >
                     <Create />
                   </Fab>
+                  <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.editNameOpen}
+                    onClose={this.handleEditNameClose}
+                  >
+                    <div className={classes.paper}>
+                      <Typography
+                        variant="h6"
+                        id="modal-title"
+                        className="edit-fullname-modal-title"
+                      >
+                        Edit
+                      </Typography>
+                      <FormControl required className="formControl">
+                        <InputLabel htmlFor="username">Full Name </InputLabel>
+                        <Input
+                          id="userfullname"
+                          type="text"
+                          onChange={this.inputFullNameChangeHandler}
+                          value={this.state.editFullName}
+                        />
+                        <FormHelperText className={this.state.fullnameRequired}>
+                          <span className="red">Required</span>
+                        </FormHelperText>
+                      </FormControl>
+                      <br />
+                      <br />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ width: 10 }}
+                        onClick={this.updateNameClickHandler}
+                      >
+                        UPDATE
+                      </Button>
+                    </div>
+                  </Modal>
                 </Grid>
               </Grid>
             </Grid>
