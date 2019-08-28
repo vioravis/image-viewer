@@ -11,6 +11,8 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
@@ -346,6 +348,21 @@ class Profile extends Component {
               </Grid>
             </Grid>
           </Grid>
+
+          <GridList cellHeight={320} cols={3}>
+            {(this.state.userPosts || []).map((post, index) => (
+              <GridListTile
+                key={post.id}
+                className="grid-item"
+                onClick={() => this.handlePostClickHandler(post.id, index)}
+              >
+                <img
+                  src={post.images.low_resolution.url}
+                  alt={post.caption.text}
+                />
+              </GridListTile>
+            ))}
+          </GridList>
         </Container>
       </div>
     );
