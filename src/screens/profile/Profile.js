@@ -60,7 +60,7 @@ class Profile extends Component {
       followed_by: 0,
       full_name: "",
       userPosts: null,
-      access_token: "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784", //sessionStorage.getItem('access-token'),
+      access_token: sessionStorage.getItem("access-token"),
       editNameOpen: false,
       fullnameRequired: "dispNone",
       editFullName: "",
@@ -152,6 +152,7 @@ class Profile extends Component {
     } else {
       this.setState({ full_name: this.state.editFullName });
     }
+    this.handleEditNameClose();
   };
 
   /**
@@ -365,7 +366,7 @@ class Profile extends Component {
               </GridListTile>
             ))}
           </GridList>
-          {this.state.selectedPost !== null ? (
+          {this.state.selectedPost !== null && (
             <Modal
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
@@ -513,8 +514,6 @@ class Profile extends Component {
                 </Grid>
               </div>
             </Modal>
-          ) : (
-            ""
           )}
         </Container>
       </div>
