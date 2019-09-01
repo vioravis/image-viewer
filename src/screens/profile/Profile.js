@@ -152,6 +152,7 @@ class Profile extends Component {
     } else {
       this.setState({ full_name: this.state.editFullName });
     }
+    this.handleEditNameClose();
   };
 
   /**
@@ -365,7 +366,7 @@ class Profile extends Component {
               </GridListTile>
             ))}
           </GridList>
-          {this.state.selectedPost !== null ? (
+          {this.state.selectedPost !== null && (
             <Modal
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
@@ -513,8 +514,6 @@ class Profile extends Component {
                 </Grid>
               </div>
             </Modal>
-          ) : (
-            ""
           )}
         </Container>
       </div>
