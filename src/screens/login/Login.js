@@ -22,15 +22,17 @@ const customStyles = {
         right:'auto',
         bottom:'auto',
         marginRight:'-50%',
-        transform:'translate(-50%,-50%)'
+        transform:'translate(-50%,-50%)',
+		width:"30%",
+		height:"40%"
 		
     },
 	card: {
-    padding: "15px",
+    padding: "0px 0px 0px 0px ",
     position: "relative",
     top: "90px",
     left: "50%",
-    width: "325px",
+    width: "100%",
     transform: "translateX(-50%)"
   }
 
@@ -114,7 +116,7 @@ class Login extends Component {
                         isOpen={this.state.modalIsOpen} 
                         contentLabel="Login"
                         onRequestClose={this.closeModalHandler}
-                        style ={customStyles.content}>
+                        style ={customStyles}>
                             <Card style ={customStyles.card}>
                                 <p className="login-text">LOGIN</p>
 
