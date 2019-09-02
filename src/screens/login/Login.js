@@ -13,6 +13,7 @@ import CardContent from "@material-ui/core/CardContent";
 
 import Header from "../../common/Header";
 import "./Login.css";
+import Home from "../home/Home"
 
 
 
@@ -85,7 +86,9 @@ class Login extends Component {
     }
 	
 	navigateToHome = () => {
-		this.props.history.push("/home");
+        //const { history } = this.props
+        this.props.history.push("/home");
+        //history.push("Home")
 	};
 
     inputUsernameChangeHandler = (e) => {
