@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Home.css';
+import Header from '../../common/Header';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -17,6 +18,7 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import {withRouter} from 'react-router-dom';
 
 const styles =  theme => ({
   card: {
@@ -60,6 +62,7 @@ class Home extends Component{
 
   constructor(props) {
     super(props);
+    
     this.state = {
       data: [],
       filteredData:[],
@@ -80,7 +83,10 @@ class Home extends Component{
     const{classes} = this.props;
     return(
       <div>
-        
+        <Header
+          userProfileUrl={this.state.userData.profile_picture}          
+          screen={"Home"}
+          searchHandler={this.onSearchEntered}/>
         <div className={classes.grid}>
           <GridList className={classes.gridList} cellHeight={'auto'}>
             {this.state.filteredData.map(item => (
@@ -100,7 +106,17 @@ class Home extends Component{
     );
   }
 
-
+  onSearchEntered = (value) =>{
+    let filteredData = this.state.data;
+    filteredData = filteredData.filter((data) =>{
+      let string = data.caption.text.toLowerCase();
+      let subString = value.toLowerCase();
+      return string.includes(subString);
+    })
+    this.setState({
+      filteredData
+    })
+  }
 
   likeClickHandler = (id) =>{
     var foundItem = this.state.data.find((item) => {
@@ -312,4 +328,4 @@ class HomeItem extends Component{
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(withRouter(Home));
