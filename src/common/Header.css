@@ -1,27 +1,13 @@
 .app-header {
     background-color: #263238;
-    height: 36px;
-    padding: 8px 32px 8px 16px;
-}
-
-.login-button {
-    float: right;
-}
-
-.logo-text {
+    height: 50px;
+    line-height: 50px;
     color: #fff;
     font-size: 18px;
-    vertical-align: middle;
-  }
-
-  .dispNone {
-      display: none;
-  }
-
-.dispBlock {
-    display: block;
+    text-align: left;
 }
 
-.red{
-    color:red;
+.header-logo{
+    color: #ffffff;
+    font-size: 18px
 }
