@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import 'typeface-roboto';
 import "./index.css";
-import Profile from "./screens/profile/Profile";
 
-ReactDOM.render(<Profile />, document.getElementById("root"));
+import Controller from "./screens/Controller";
+
+ReactDOM.render(<Controller />, document.getElementById("root"));
+

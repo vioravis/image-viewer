@@ -9,32 +9,31 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Card from '@material-ui/core/Card';
+import CardContent from "@material-ui/core/CardContent";
 
 import Header from "../../common/Header";
 import "./Login.css";
+import Home from "../home/Home"
 
 
 
 const customStyles = {
+
     content:{
-        top:'50%',
-        left:'50%',
+        top:'10%',
+        left:'35%',
         right:'auto',
         bottom:'auto',
         marginRight:'-50%',
-        transform:'translate(-50%,-50%)'
+        transform:'translate(-50,-50%)',
+		width:"30%",
+        height:"45%"
 		
-    },
-	card: {
-    padding: "15px",
-    position: "relative",
-    top: "90px",
-    left: "50%",
-    width: "325px",
-    transform: "translateX(-50%)"
-  }
-
+    }
+    
 }
+
+
 
 const container = function(props) {
 
@@ -81,13 +80,15 @@ class Login extends Component {
 			sessionStorage.setItem("access-token","8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
 			this.setState({ loggedIn: true });
 			this.navigateToHome();
-		} else {
+		} else if (this.state.username !== "" && this.state.password !== "") {
 			this.setState({ invalidUsernamePassword: "dispBlock" });
 		}
     }
 	
 	navigateToHome = () => {
-		this.props.history.push("/home");
+        //const { history } = this.props
+        this.props.history.push("/home");
+        //history.push("Home")
 	};
 
     inputUsernameChangeHandler = (e) => {
@@ -110,12 +111,17 @@ class Login extends Component {
                         <Button variant="contained" color="default" onClick={this.openModalHandler}>
                             Login
                         </Button>
+
+					
                         <Modal ariaHideApp={false} 
                         isOpen={this.state.modalIsOpen} 
                         contentLabel="Login"
                         onRequestClose={this.closeModalHandler}
-                        style ={customStyles.content}>
-                            <Card style ={customStyles.card}>
+                        style={customStyles}
+                        >
+
+                            <Card className="no-border" >
+                                
                                 <p className="login-text">LOGIN</p>
 
                                 <FormControl required>
@@ -141,13 +147,14 @@ class Login extends Component {
                                 <Button variant="contained" color="primary" onClick={this.loginClickHandler}>
                                 LOGIN
                                 </Button>            
-
-                            </Card>
-                            
-
-                        </Modal>
+                            </Card>  
+							</Modal>
 						
-                    </div>
+						
+                            
+					</div>
+   	
+                    
 		
 			</header>	
             </div>
