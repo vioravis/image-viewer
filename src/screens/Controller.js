@@ -21,7 +21,7 @@ class Controller extends Component {
               exact
               path="/home"
               render={props =>
-                !this.state.loggedIn ? (
+                sessionStorage.getItem("access-token") === null ? (
                   <Login {...props} baseUrl={this.baseUrl} />
                 ) : (
                   <div>home page</div>
@@ -32,7 +32,7 @@ class Controller extends Component {
               exact
               path="/profile"
               render={props =>
-                !this.state.loggedIn ? (
+                sessionStorage.getItem("access-token") === null ? (
                   <Login {...props} baseUrl={this.baseUrl} />
                 ) : (
                   <Profile />
@@ -43,7 +43,7 @@ class Controller extends Component {
               exact
               path="/"
               render={props =>
-                !this.state.loggedIn ? (
+                sessionStorage.getItem("access-token") === null ? (
                   <Login {...props} baseUrl={this.baseUrl} />
                 ) : (
                   <div>home page</div>
