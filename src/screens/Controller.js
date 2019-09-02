@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Login from "./login/Login";
 import Profile from "./profile/Profile";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./home/Home";
 
 class Controller extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class Controller extends Component {
                 sessionStorage.getItem("access-token") === null ? (
                   <Login {...props} baseUrl={this.baseUrl} />
                 ) : (
-                  <div>home page</div>
+                  <Home />
                 )
               }
             />
@@ -46,7 +47,7 @@ class Controller extends Component {
                 sessionStorage.getItem("access-token") === null ? (
                   <Login {...props} baseUrl={this.baseUrl} />
                 ) : (
-                  <div>home page</div>
+                  <Home />
                 )
               }
             />
