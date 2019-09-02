@@ -1,9 +1,5 @@
 import React,{Component} from 'react';
-
 import Button from '@material-ui/core/Button';
-import Modal from 'react-modal';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
@@ -13,60 +9,47 @@ import CardContent from "@material-ui/core/CardContent";
 
 import Header from "../../common/Header";
 import "./Login.css";
-import Home from "../home/Home"
-
-
 
 const customStyles = {
 
     content:{
-        top:'10%',
+        top:'30%',
         left:'35%',
-        right:'auto',
+        right:'35%',
         bottom:'auto',
-        marginRight:'-50%',
+        marginRight:'-30%',
         transform:'translate(-50,-50%)',
-		width:"30%",
-        height:"45%"
+		width:"40%",
+        height:"70%"
 		
-    }
+    },
+	
+	card: {
+    padding: "15px",
+    position: "relative",
+    top: "90px",
+    left: "50%",
+    width:"40%",
+    height:"70%",
+    transform: "translateX(-50%)"
+  }
     
 }
 
 
-
-const container = function(props) {
-
-    return(
-            <Typography component="div" style={{padding: 0,textAlign:'center'}}>
-                {props.children}
-            </Typography>
-    );
-
-
-}
 
 class Login extends Component {
 
     constructor(){
         super();
         this.state = {
-            modalIsOpen: false,
             username:"",
             userNameRequired: "dispNone",
             password:"",
             passwordRequired:"dispNone",
-			 invalidUsernamePassword: "dispNone",
-			 loggedIn: sessionStorage.getItem("access-token") == null ? false : true
+			invalidUsernamePassword: "dispNone",
+			loggedIn: sessionStorage.getItem("access-token") == null ? false : true
         }
-    }
-
-    openModalHandler = () => {
-        this.setState({modalIsOpen:true})
-    }
-
-    closeModalHandler = () => {
-        this.setState({modalIsOpen:false})
     }
 
     loginClickHandler = () => {
@@ -76,7 +59,7 @@ class Login extends Component {
 		
 		if (this.state.username === "uname" && this.state.password === "pword") {
 		
-			sessionStorage.setItem("username", "admin");
+			sessionStorage.setItem("username", "uname");
 			sessionStorage.setItem("access-token","8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
 			this.setState({ loggedIn: true });
 			this.navigateToHome();
@@ -85,17 +68,15 @@ class Login extends Component {
 		}
     }
 	
-	navigateToHome = () => {
-        //const { history } = this.props
-        this.props.history.push("/home");
-        //history.push("Home")
+	navigateToHome = () => {       
+        this.props.history.push("/home");       
 	};
 
-    inputUsernameChangeHandler = (e) => {
+    inputUsernameChangeHandler = e => {
         this.setState({username:e.target.value})
     }
 
-    passwordChangeHandler = (e) => {
+    passwordChangeHandler = e => {
         this.setState({password:e.target.value})
     }
 
@@ -103,24 +84,15 @@ class Login extends Component {
         return(
             <div>
 
-             <header className="app-header">
+             <Header screen={"Login"} />
                
-                    <span className="logo-text">Image Viewer</span>  
+                    
 					
-                    <div className="login-button">
-                        <Button variant="contained" color="default" onClick={this.openModalHandler}>
-                            Login
-                        </Button>
-
-					
-                        <Modal ariaHideApp={false} 
-                        isOpen={this.state.modalIsOpen} 
-                        contentLabel="Login"
-                        onRequestClose={this.closeModalHandler}
-                        style={customStyles}
-                        >
-
-                            <Card className="no-border" >
+                    <div >
+                            <Card style={customStyles.card}>
+                            
+                            <CardContent>
+							
                                 
                                 <p className="login-text">LOGIN</p>
 
@@ -130,8 +102,10 @@ class Login extends Component {
                                     <FormHelperText className={this.state.userNameRequired}>
                                         <span className="red">required</span>
                                     </FormHelperText>    
-                                </FormControl>                 
+                                </FormControl>  
+								
                                 <br></br>
+
                                 <FormControl required>
                                     <InputLabel htmlFor="password"> Password </InputLabel>    
                                     <Input className="text-box" id="password" type="password" password={this.state.password} onChange={this.passwordChangeHandler}></Input>    
@@ -139,24 +113,29 @@ class Login extends Component {
                                         <span className="red">required</span>
                                     </FormHelperText>
                                 </FormControl>
+								
 								<br></br>
-									<div className={this.state.invalidUsernamePassword}>
+								
+								<div className={this.state.invalidUsernamePassword}>
 										<span className="red"> Incorrect username and/or password </span>
-									</div>
-                                <br></br>    
-                                <Button variant="contained" color="primary" onClick={this.loginClickHandler}>
-                                LOGIN
-                                </Button>            
-                            </Card>  
-							</Modal>
-						
-						
+								</div>
+                                
+								<br></br>    
+                                
+								<Button variant="contained" color="primary" onClick={this.loginClickHandler}>
+                                
+								LOGIN
+                                </Button>  
+
+                                </CardContent>          
                             
+							</Card>  
+								                            
 					</div>
    	
                     
 		
-			</header>	
+			
             </div>
         )
     }
