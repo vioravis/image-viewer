@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Profile.css";
-import Header from '../../common/Header';
+import Header from "../../common/Header";
 import Avatar from "@material-ui/core/Avatar";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
@@ -253,274 +253,286 @@ class Profile extends Component {
     }
   };
 
-  
   render() {
     const { classes } = this.props;
     return (
       <div>
         <Header
           screen={"Profile"}
-          userProfileUrl={this.state.profile_picture}/>
-        <Container fixed>
-          <Grid container spacing={3} justify="center" alignItems="center">
-            <Grid item>
-              <Avatar
-                alt={this.state.username}
-                src={this.state.profile_picture}
-                className={classes.bigAvatar}
-              />
-            </Grid>
-            <Grid item>
-              <Typography variant="h6" component="h6">
-                {this.state.username}
-              </Typography>
-              <Grid
-                container
-                spacing={10}
-                justify="space-between"
-                alignItems="center"
-              >
-                <Grid item>
-                  <Typography variant="subtitle2">
-                    Posts: {this.state.media}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">
-                    Follows: {this.state.follows}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle2">
-                    Followed By: {this.state.followed_by}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                spacing={2}
-                justify="flex-start"
-                alignItems="center"
-              >
-                <Grid item>
-                  <Typography variant="h6">{this.state.full_name}</Typography>
-                </Grid>
-                <Grid item>
-                  <Fab
-                    color="secondary"
-                    aria-label="Edit"
-                    className={classes.fab}
-                    onClick={this.handleEditNameOpen}
-                  >
-                    <Create />
-                  </Fab>
-                  <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.editNameOpen}
-                    onClose={this.handleEditNameClose}
-                  >
-                    <div className={classes.paper}>
-                      <Typography
-                        variant="h6"
-                        id="modal-title"
-                        className="edit-fullname-modal-title"
-                      >
-                        Edit
-                      </Typography>
-                      <FormControl required className="formControl">
-                        <InputLabel htmlFor="username">Full Name </InputLabel>
-                        <Input
-                          id="userfullname"
-                          type="text"
-                          onChange={this.inputFullNameChangeHandler}
-                          value={this.state.editFullName}
-                        />
-                        <FormHelperText className={this.state.fullnameRequired}>
-                          <span className="red">Required</span>
-                        </FormHelperText>
-                      </FormControl>
-                      <br />
-                      <br />
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ width: 10 }}
-                        onClick={this.updateNameClickHandler}
-                      >
-                        UPDATE
-                      </Button>
-                    </div>
-                  </Modal>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <GridList cellHeight={320} cols={3}>
-            {(this.state.userPosts || []).map((post, index) => (
-              <GridListTile
-                key={post.id}
-                className="grid-item"
-                onClick={() => this.handlePostClickHandler(post.id, index)}
-              >
-                <img
-                  src={post.images.low_resolution.url}
-                  alt={post.caption.text}
+          userProfileUrl={this.state.profile_picture}
+        />
+        <div className="container">
+          <Container fixed>
+            <Grid container spacing={3} justify="center" alignItems="center">
+              <Grid item>
+                <Avatar
+                  alt={this.state.username}
+                  src={this.state.profile_picture}
+                  className={classes.bigAvatar}
                 />
-              </GridListTile>
-            ))}
-          </GridList>
-          {this.state.selectedPost !== null && (
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={this.state.postItemOpen}
-              onClose={this.handlePostItemClose}
-            >
-              <div className={classes.paper_big}>
-                <Grid container spacing={3}>
-                  <Grid item xs={6}>
-                    <img
-                      src={
-                        this.state.selectedPost.images.standard_resolution.url
-                      }
-                      width="100%"
-                      alt={this.state.selectedPost.caption.text.split("\n")[0]}
-                    />
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" component="h6">
+                  {this.state.username}
+                </Typography>
+                <Grid
+                  container
+                  spacing={10}
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      Posts: {this.state.media}
+                    </Typography>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Grid
-                      container
-                      spacing={3}
-                      justify="flex-start"
-                      alignItems="center"
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      Follows: {this.state.follows}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      Followed By: {this.state.followed_by}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  spacing={2}
+                  justify="flex-start"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <Typography variant="h6">{this.state.full_name}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Fab
+                      color="secondary"
+                      aria-label="Edit"
+                      className={classes.fab}
+                      onClick={this.handleEditNameOpen}
                     >
-                      <Grid item>
-                        <Avatar
-                          src={this.state.selectedPost.user.profile_picture}
-                          alt={this.state.selectedPost.user.username}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="subtitle2">
-                          {this.state.selectedPost.user.username}
+                      <Create />
+                    </Fab>
+                    <Modal
+                      aria-labelledby="simple-modal-title"
+                      aria-describedby="simple-modal-description"
+                      open={this.state.editNameOpen}
+                      onClose={this.handleEditNameClose}
+                    >
+                      <div className={classes.paper}>
+                        <Typography
+                          variant="h6"
+                          id="modal-title"
+                          className="edit-fullname-modal-title"
+                        >
+                          Edit
                         </Typography>
-                      </Grid>
-                    </Grid>
-                    <Divider light />
-                    <Grid
-                      container
-                      spacing={3}
-                      justify="flex-start"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <Typography variant="caption">
-                          {this.state.selectedPost.caption.text.split("\n")[0]}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      container
-                      spacing={3}
-                      justify="flex-start"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        {(this.state.selectedPost.tags || []).map((tag, i) => {
-                          return (
-                            <Typography variant="caption" color="primary">
-                              {" "}
-                              #{tag}
-                            </Typography>
-                          );
-                        })}
-                      </Grid>
-                    </Grid>
-
-                    <Grid
-                      container
-                      spacing={1}
-                      justify="flex-start"
-                      alignItems="center"
-                    >
-                      <Grid item className="comments-min-height">
-                        {(this.state.selectedPost.comments.data || []).map(
-                          (comment, i) => {
-                            return (
-                              <Typography
-                                key={comment.id}
-                                variant="caption"
-                                display="block"
-                              >
-                                <strong>{comment.comment_by} :</strong>{" "}
-                                {comment.comment_value}
-                              </Typography>
-                            );
-                          }
-                        )}
-                      </Grid>
-                    </Grid>
-
-                    <Grid
-                      container
-                      spacing={1}
-                      justify="flex-start"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <Favorite
-                          className={
-                            this.state.selectedPost.user_has_liked
-                              ? "redColor"
-                              : "greyColor"
-                          }
-                          onClick={this.likesClickHandler}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="caption">
-                          {this.state.selectedPost.likes.count} likes
-                        </Typography>
-                      </Grid>
-                    </Grid>
-
-                    <Grid
-                      container
-                      spacing={2}
-                      justify="flex-start"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <FormControl className="formControl">
-                          <InputLabel htmlFor="addcomment">
-                            Add a comment{" "}
-                          </InputLabel>
+                        <FormControl required className="formControl">
+                          <InputLabel htmlFor="username">Full Name </InputLabel>
                           <Input
-                            id="addcomment"
+                            id="userfullname"
                             type="text"
-                            onChange={this.inputAddCommentChangeHandler}
-                            value={this.state.addNewComment}
+                            onChange={this.inputFullNameChangeHandler}
+                            value={this.state.editFullName}
                           />
+                          <FormHelperText
+                            className={this.state.fullnameRequired}
+                          >
+                            <span className="red">Required</span>
+                          </FormHelperText>
                         </FormControl>
-                      </Grid>
-                      <Grid item>
+                        <br />
+                        <br />
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={this.addCommentClickHandler}
+                          style={{ width: 10 }}
+                          onClick={this.updateNameClickHandler}
                         >
-                          ADD
+                          UPDATE
                         </Button>
+                      </div>
+                    </Modal>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <GridList cellHeight={320} cols={3}>
+              {(this.state.userPosts || []).map((post, index) => (
+                <GridListTile
+                  key={post.id}
+                  className="grid-item"
+                  onClick={() => this.handlePostClickHandler(post.id, index)}
+                >
+                  <img
+                    src={post.images.low_resolution.url}
+                    alt={post.caption.text}
+                  />
+                </GridListTile>
+              ))}
+            </GridList>
+            {this.state.selectedPost !== null && (
+              <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.postItemOpen}
+                onClose={this.handlePostItemClose}
+              >
+                <div className={classes.paper_big}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={6}>
+                      <img
+                        src={
+                          this.state.selectedPost.images.standard_resolution.url
+                        }
+                        width="100%"
+                        alt={
+                          this.state.selectedPost.caption.text.split("\n")[0]
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid
+                        container
+                        spacing={3}
+                        justify="flex-start"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <Avatar
+                            src={this.state.selectedPost.user.profile_picture}
+                            alt={this.state.selectedPost.user.username}
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle2">
+                            {this.state.selectedPost.user.username}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Divider light />
+                      <Grid
+                        container
+                        spacing={3}
+                        justify="flex-start"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <Typography variant="caption">
+                            {
+                              this.state.selectedPost.caption.text.split(
+                                "\n"
+                              )[0]
+                            }
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        spacing={3}
+                        justify="flex-start"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          {(this.state.selectedPost.tags || []).map(
+                            (tag, i) => {
+                              return (
+                                <Typography variant="caption" color="primary">
+                                  {" "}
+                                  #{tag}
+                                </Typography>
+                              );
+                            }
+                          )}
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={1}
+                        justify="flex-start"
+                        alignItems="center"
+                      >
+                        <Grid item className="comments-min-height">
+                          {(this.state.selectedPost.comments.data || []).map(
+                            (comment, i) => {
+                              return (
+                                <Typography
+                                  key={comment.id}
+                                  variant="caption"
+                                  display="block"
+                                >
+                                  <strong>{comment.comment_by} :</strong>{" "}
+                                  {comment.comment_value}
+                                </Typography>
+                              );
+                            }
+                          )}
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={1}
+                        justify="flex-start"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <Favorite
+                            className={
+                              this.state.selectedPost.user_has_liked
+                                ? "redColor"
+                                : "greyColor"
+                            }
+                            onClick={this.likesClickHandler}
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="caption">
+                            {this.state.selectedPost.likes.count} likes
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={2}
+                        justify="flex-start"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          <FormControl className="formControl">
+                            <InputLabel htmlFor="addcomment">
+                              Add a comment{" "}
+                            </InputLabel>
+                            <Input
+                              id="addcomment"
+                              type="text"
+                              onChange={this.inputAddCommentChangeHandler}
+                              value={this.state.addNewComment}
+                            />
+                          </FormControl>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.addCommentClickHandler}
+                          >
+                            ADD
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </div>
-            </Modal>
-          )}
-        </Container>
+                </div>
+              </Modal>
+            )}
+          </Container>
+        </div>
       </div>
     );
   }
