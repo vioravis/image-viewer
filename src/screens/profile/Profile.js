@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Profile.css";
+import Header from '../../common/Header';
 import Avatar from "@material-ui/core/Avatar";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
@@ -252,10 +253,14 @@ class Profile extends Component {
     }
   };
 
+  
   render() {
     const { classes } = this.props;
     return (
       <div>
+        <Header
+          screen={"Profile"}
+          userProfileUrl={this.state.profile_picture}/>
         <Container fixed>
           <Grid container spacing={3} justify="center" alignItems="center">
             <Grid item>
