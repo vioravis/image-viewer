@@ -284,6 +284,7 @@ class HomeItem extends Component{
                 <InputLabel htmlFor="comment">Add Comment</InputLabel>
                 <Input id="comment" value={this.state.comment} onChange={this.commentChangeHandler}/>
               </FormControl>
+              <span>&nbsp;&nbsp;</span>
               <FormControl>
                 <Button onClick={this.onAddCommentClicked.bind(this,item.id)}
                    variant="contained" color="primary">
